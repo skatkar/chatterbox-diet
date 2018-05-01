@@ -20,9 +20,9 @@ app.missing(function($) {
   //$.redirect("/error.html")
   $.header("Content-Type", "text/html")
   $.status("404")
-  fs.readFile(__dirname+"/app/error.html",function(error, content){
+  fs.readFile(__dirname + "/app/error.html", function(error, content) {
     // handle error
-    if(error) throw error;
+    if (error) throw error;
 
     // Serve the file to the client
     $.end(content.toString())

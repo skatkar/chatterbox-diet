@@ -1,5 +1,6 @@
 // Create an app
 var server = require("diet")
+var fs = require("fs")
 var wss = require("./websockets-server");
 var app = server()
 app.listen("http://localhost:8000")
@@ -15,7 +16,17 @@ app.view("file", staticFile)
 
 app.missing(function($) {
   //$.end('My Custom 404 Not Found Page')
-  $.redirect("/error.html")
+  // set "Content-Type" header to "text/html"
+  //$.redirect("/error.html")
+  $.header("Content-Type", "text/html")
+  $.status("404")
+  fs.readFile(__dirname+"/app/error.html",function(error, content){
+    // handle error
+    if(error) throw error;
+
+    // Serve the file to the client
+    $.end(content.toString())
+  })
 })
 
 //Error Handler
